@@ -22,6 +22,7 @@ const SignUpForm = () => {
             if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
                 setShowDropdown(false);
             }
+
         };
 
         document.addEventListener("click", closeOnOutsideClick);
