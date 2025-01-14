@@ -21,7 +21,6 @@ function Login(props) {
         try {
             const response = await apiClient.post('/api/login', login);
             console.log(response.data);
-            console.log(response.data);
         } catch (error) {
             console.log(error)
         }

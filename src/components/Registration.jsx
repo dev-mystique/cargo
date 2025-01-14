@@ -4,13 +4,13 @@ import {useTranslation} from "react-i18next";
 import countries from '../assets/country.json';
 
 const SignUpForm = () => {
-    const [user, setUser] = useState({
+    const initialUserState = {
         email: "",
         password: "",
         password_confirmation: "",
         user_type: ""
-
-    });
+    }
+    const [user, setUser] = useState(initialUserState);
     const {t} = useTranslation("common");
 
     const [, setErrors] = useState({});
@@ -32,10 +32,19 @@ const SignUpForm = () => {
     const handleChange = (e) => {
         const {name, value} = e.target;
 
-        setUser((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
+        if (name === "user_type") {
+            // Reset user state to initial state if user_type changes
+            setUser({
+                ...initialUserState,
+                user_type: value, // Retain the new value for user_type
+            });
+        } else {
+            // Update only the changed field for other cases
+            setUser((prevState) => ({
+                ...prevState,
+                [name]: value,
+            }));
+        }
         setErrors((prevErrors) => ({
             ...prevErrors,
             [name]: "",
