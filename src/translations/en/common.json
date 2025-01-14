@@ -1,6 +1,6 @@
 {
   "welcome": "Welcome to React Vite app!",
   "registration": "Registration",
-  "signup"  :"sign up"
-
+  "signup"  :"sign up",
+  "login": "Log in"
 }

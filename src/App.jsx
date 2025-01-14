@@ -3,16 +3,45 @@ import './App.css';
 import {useTranslation} from "react-i18next";
 import Registration from "./components/Registration.jsx";
 import {LanguageSwitcher} from "./components/LanguageSwitcher.jsx";
-import CountryList from "./components/Country.jsx";
+import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
+import {useAuth} from "./context/AuthProvider.jsx";
+import Login from "./components/Login.jsx";
+import bg from "./assets/ngapp.jpg";
+
+const ProtectedRoute = ({children}) => {
+    const {isAuthenticated} = useAuth();
+    return isAuthenticated ? children : <Navigate to="/login"/>;
+};
 
 function App() {
-
     const {t} = useTranslation("common");
-
     return (
-        <div className="App">
-            <LanguageSwitcher/>
-            <Registration/>
+        <div
+            style={{
+                backgroundImage: `url(${bg})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                minHeight: '100vh', // Ensures the background covers the full viewport
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}
+        >
+            <Router>
+                <LanguageSwitcher/>
+                <Routes>
+                    <Route
+                        path="/register"
+                        element={
+                            <div className="d-flex flex-col align-items-center justify-content-center">
+                                <Registration/>
+                            </div>
+                        }
+                    />
+                    <Route path="/login" element={<Login/>}/>
+                </Routes>
+            </Router>
         </div>
     );
 }

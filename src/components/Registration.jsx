@@ -98,8 +98,10 @@ const SignUpForm = () => {
 
 
     return (
-        <div className='space-y-5'>
-            <span>{t('registration')}</span>
+        <div className='space-y-5 d-flex flex-column align-items-center justify-content-center'>
+            <div>
+                <p className='space-y-5 d-flex flex-column align-items-center justify-content-center'>{t('registration')}</p>
+            </div>
             <label className="input input-bordered flex items-center gap-2">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -129,6 +131,7 @@ const SignUpForm = () => {
                     <option value="company">Company</option>
                 </select>
             </label>{/* user type */}
+
             {user.user_type === "individual" && (
                 <div className='space-y-5'>
                     <div className="form-control w-full max-w-xs relative">
@@ -168,7 +171,8 @@ const SignUpForm = () => {
                                 )}
                             </div>
                         )}
-                    </div>{/* country */}
+                    </div>
+                    {/* country */}
                     <label className="input input-bordered flex items-center gap-2">
                         <input
                             type="text"
