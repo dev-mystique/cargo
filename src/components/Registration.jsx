@@ -43,7 +43,6 @@ const SignUpForm = () => {
     };
 
     const handleSubmit = async (e) => {
-        console.log(user)
         let newErrors = {};
         e.preventDefault();
         try {

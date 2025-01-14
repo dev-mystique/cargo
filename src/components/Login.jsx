@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {useTranslation} from "react-i18next";
+import apiClient from "../axios/apiClient.js";
 
 function Login(props) {
     const [login, setLogin] = useState({
@@ -16,8 +17,14 @@ function Login(props) {
         }));
     }
 
-    const handleSubmit = (e) => {
-        console.log(login)
+    const handleSubmit = async (e) => {
+        try {
+            const response = await apiClient.post('/api/login', login);
+            console.log(response.data);
+            console.log(response.data);
+        } catch (error) {
+            console.log(error)
+        }
     }
     const {t} = useTranslation("common");
 
