@@ -19,7 +19,7 @@ function Login(props) {
 
     const handleSubmit = async (e) => {
         try {
-            const response = await apiClient.post('/api/login', login);
+            const response = await apiClient.post('/api/login',login);
             console.log(response.data);
         } catch (error) {
             console.log(error)
@@ -63,6 +63,12 @@ function Login(props) {
                     onChange={handleChange}
                 />
             </label>{/* password */}
+            <p>
+               Don&#39;t have an account?{' '}
+                <a href="/register" style={{color: '#2f7cf7', textDecoration: 'underline'}}>
+                    Register here
+                </a>
+            </p>
             <button onClick={handleSubmit} className="btn btn-wide">{t('login')}</button>
         </div>
     )

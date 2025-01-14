@@ -298,7 +298,12 @@ const SignUpForm = () => {
                     onChange={handleChange}
                 />
             </label>{/* password confirmation */}
-
+            <p>
+                Already have an account?{' '}
+                <a href="/login" style={{color: '#2f7cf7', textDecoration: 'underline'}}>
+                    Login here
+                </a>
+            </p>
             <button onClick={handleSubmit} className="btn btn-wide">{t('signup')}</button>
         </div>
     );
