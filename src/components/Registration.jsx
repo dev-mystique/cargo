@@ -2,6 +2,8 @@ import {useState, useEffect, useRef} from 'react';
 import apiClient from "../axios/apiClient.js";
 import {useTranslation} from "react-i18next";
 import countries from '../assets/country.json';
+import {useAuth} from "../context/AuthProvider.jsx";
+import * as res from "autoprefixer";
 
 const SignUpForm = () => {
     const initialUserState = {
@@ -12,7 +14,7 @@ const SignUpForm = () => {
     }
     const [user, setUser] = useState(initialUserState);
     const {t} = useTranslation("common");
-
+    const auth = useAuth();
     const [, setErrors] = useState({});
 
     const dropdownRef = useRef(null);
@@ -33,15 +35,15 @@ const SignUpForm = () => {
         const {name, value} = e.target;
 
         if (name === "user_type") {
-            // Reset user state to initial state if user_type changes
             setUser({
                 ...initialUserState,
-                user_type: value, // Retain the new value for user_type
+                email: user.email,
+                user_type: value,
             });
         } else {
-            // Update only the changed field for other cases
             setUser((prevState) => ({
                 ...prevState,
+                email: user.email,
                 [name]: value,
             }));
         }
@@ -55,19 +57,21 @@ const SignUpForm = () => {
         let newErrors = {};
         e.preventDefault();
         try {
-            const response = await apiClient.post('/api/user', user);
-            console.log(response.data);
+            const response = await apiClient.post('/api/sign-up', user);
+            if (response.status === 201) {
+                auth.signUpAction(await response)
+            }
             newErrors = response.errors;
             if (Object.keys(newErrors).length > 0) {
                 setErrors(newErrors);
             }
-
         } catch (error) {
             newErrors = error.response.data.errors
             if (Object.keys(newErrors).length > 0) {
                 setErrors(newErrors);
             }
         }
+
     }
 
     const [searchTerm, setSearchTerm] = useState('');
@@ -86,7 +90,6 @@ const SignUpForm = () => {
     };
 
     const handleSelect = (country) => {
-        console.log('Selected Country:', country);
         setSearchTerm(country.name);
         setUser((prevState) => ({
             ...prevState,

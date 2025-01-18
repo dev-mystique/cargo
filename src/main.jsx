@@ -9,6 +9,7 @@ import {AuthProvider} from "./context/AuthProvider.jsx";
 import common_ka from "./translations/ka/common.json";
 import common_en from "./translations/en/common.json";
 import common_ru from "./translations/ru/common.json";
+import {BrowserRouter} from "react-router-dom";
 
 
 i18next.init({
@@ -29,10 +30,12 @@ i18next.init({
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
-        <I18nextProvider i18n={i18next}>
-            <AuthProvider>
-                <App/>
-            </AuthProvider>
-        </I18nextProvider>
+        <BrowserRouter>
+            <I18nextProvider i18n={i18next}>
+                <AuthProvider>
+                    <App/>
+                </AuthProvider>
+            </I18nextProvider>
+        </BrowserRouter>
     </StrictMode>,
 )

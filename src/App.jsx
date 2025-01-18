@@ -7,6 +7,8 @@ import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom
 import {useAuth} from "./context/AuthProvider.jsx";
 import Login from "./components/Login.jsx";
 import bg from "./assets/ngapp.jpg";
+import AuthFirstPage from "./components/private/AuthFirstPage.jsx";
+import PrivateRoute from "./components/private/PrivateRoute.jsx";
 
 const ProtectedRoute = ({children}) => {
     const {isAuthenticated} = useAuth();
@@ -28,7 +30,6 @@ function App() {
                 justifyContent: 'center',
             }}
         >
-            <Router>
                 <LanguageSwitcher/>
                 <Routes>
                     <Route
@@ -40,8 +41,10 @@ function App() {
                         }
                     />
                     <Route path="/login" element={<Login/>}/>
+                    <Route element={<PrivateRoute/>}>
+                        <Route path="/dashboard" element={<AuthFirstPage/>}/>
+                    </Route>
                 </Routes>
-            </Router>
         </div>
     );
 }
