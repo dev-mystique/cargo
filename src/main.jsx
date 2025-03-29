@@ -1,4 +1,3 @@
-import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
 import './index.css'
 import App from './App'
@@ -11,10 +10,10 @@ import common_en from "./translations/en/common.json";
 import common_ru from "./translations/ru/common.json";
 import {BrowserRouter} from "react-router-dom";
 
-
+const savedLanguage = localStorage.getItem("i18nextLng") || "en";
 i18next.init({
     interpolation: {escapeValue: false},
-    lng: 'en',
+    lng: savedLanguage,
     resources: {
         en: {
             common: common_en

@@ -2,7 +2,7 @@
 
 import { useTranslation } from "react-i18next"
 import { useEffect, useState, useRef } from "react"
-import { Globe, Check } from "lucide-react"
+import { Globe, ChevronDown, Check } from "lucide-react"
 
 export const LanguageSwitcher = () => {
     const { t, i18n } = useTranslation("common")
@@ -53,35 +53,42 @@ export const LanguageSwitcher = () => {
                 {/* Current language button */}
                 <button
                     onClick={() => setIsOpen(!isOpen)}
-                    className="flex items-center backdrop-blur-md bg-white/40 border border-white/40 rounded-full px-3 py-2 text-sm font-medium shadow-sm hover:bg-white/50 transition-all duration-200"
+                    className="flex items-center space-x-2 backdrop-blur-md bg-white/40 border border-white/40 rounded-lg px-3 py-2 text-sm font-medium shadow-sm hover:bg-white/50 transition-all duration-200"
                     aria-haspopup="listbox"
                     aria-expanded={isOpen}
                 >
-                    <Globe className="w-4 h-4 text-gray-600 mr-2" />
-                    <span className="mr-1">{currentLanguage.flag}</span>
+                    <Globe className="w-4 h-4 text-gray-600" />
+                    <span className="mx-1">{currentLanguage.flag}</span>
+                    <span>{currentLanguage.label}</span>
+                    <ChevronDown
+                        className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+                    />
                 </button>
 
-                {/* Dropdown menu */}
+                {/* Dropdown menu with animation */}
                 <div
-                    className={`absolute right-0 mt-2 backdrop-blur-md bg-white/60 border border-white/40 rounded-lg shadow-lg overflow-hidden transition-all duration-200 ${
-                        isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2 pointer-events-none"
+                    className={`absolute right-0 mt-2 w-48 backdrop-blur-md bg-white/60 border border-white/40 rounded-lg shadow-lg overflow-hidden transition-all duration-200 origin-top-right ${
+                        isOpen ? "transform scale-100 opacity-100" : "transform scale-95 opacity-0 pointer-events-none"
                     }`}
                 >
-                    <div className="p-2 space-y-1">
+                    <ul className="py-1" role="listbox">
                         {languages.map((language) => (
-                            <button
-                                key={language.code}
-                                className={`flex items-center w-full px-3 py-2 text-sm rounded-md transition-colors ${
-                                    language.code === i18n.language ? "bg-white/70 font-medium" : "hover:bg-white/40"
-                                }`}
-                                onClick={() => handleChangeLanguage(language.code)}
-                            >
-                                <span className="mr-2 text-base">{language.flag}</span>
-                                <span className="flex-1 text-left">{language.label}</span>
-                                {language.code === i18n.language && <Check className="w-4 h-4 text-green-500" />}
-                            </button>
+                            <li key={language.code}>
+                                <button
+                                    className={`flex items-center w-full px-4 py-2 text-sm hover:bg-white/60 transition-colors ${
+                                        language.code === i18n.language ? "bg-white/40 font-medium" : ""
+                                    }`}
+                                    onClick={() => handleChangeLanguage(language.code)}
+                                    role="option"
+                                    aria-selected={language.code === i18n.language}
+                                >
+                                    <span className="mr-2 text-base">{language.flag}</span>
+                                    <span className="flex-1 text-left">{language.label}</span>
+                                    {language.code === i18n.language && <Check className="w-4 h-4 text-green-500" />}
+                                </button>
+                            </li>
                         ))}
-                    </div>
+                    </ul>
                 </div>
             </div>
         </div>

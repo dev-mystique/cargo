@@ -4,6 +4,7 @@ import {useTranslation} from "react-i18next";
 import countries from '../assets/country.json';
 import {useAuth} from "../context/AuthProvider.jsx";
 import * as res from "autoprefixer";
+import NoResults from "./utile/NoResults.jsx";
 
 const SignUpForm = () => {
     const initialUserState = {
@@ -109,7 +110,7 @@ const SignUpForm = () => {
 
 
     return (
-        <div className='space-y-5 d-flex flex-column align-items-center justify-content-center'>
+        <div className='max-h-full space-y-5 d-flex flex-column align-items-center justify-content-center'>
             <div>
                 <p className='space-y-5 d-flex flex-column align-items-center justify-content-center'>{t('registration')}</p>
             </div>
@@ -159,26 +160,25 @@ const SignUpForm = () => {
                         {showDropdown && (
                             <div
                                 ref={dropdownRef}
-                                className=" bg-black no mt-[20px] w-full max-h-40 overflow-y-auto border border-gray-300 rounded-md shadow-lg">
-                                {filteredCountries.slice(0, 10).map((country) => (
-                                    <div
-                                        key={country.id}
-                                        onClick={() => handleSelect(country)}
-                                        className="cursor-pointer p-2 hover:bg-cyan-950 flex items-center"
-                                    >
-                                        <img
-                                            src={country.flag}
-                                            alt={country.name}
-                                            className="w-5 h-5 mr-2"
-                                        />
-                                        {country.name}
-                                    </div>
-                                ))}
-
-                                {filteredCountries.length === 0 && (
-                                    <div className="p-2 text-gray-500 text-center">
-                                        No results found
-                                    </div>
+                                className={` absolute top-[80px] bg-black mt-[20px] w-full max-h-40 overflow-y-auto border border-gray-300 rounded-md shadow-lg`}
+                            >
+                                {filteredCountries.length > 0 ? (
+                                    filteredCountries.slice(0, 10).map((country) => (
+                                        <div
+                                            key={country.id}
+                                            onClick={() => handleSelect(country)}
+                                            className="cursor-pointer p-2 hover:bg-cyan-950 flex items-center"
+                                        >
+                                            <img
+                                                src={country.flag}
+                                                alt={country.name}
+                                                className="w-5 h-5 mr-2"
+                                            />
+                                            {country.name}
+                                        </div>
+                                    ))
+                                ) : (
+                                    <NoResults/>
                                 )}
                             </div>
                         )}
